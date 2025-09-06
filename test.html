@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playeras con Tu Idea - Daniela Briano</title>
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #4ecdc4;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --accent: #ffd166;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* Animaciones */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Header y Navegación */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 0 5%;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #555;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Floating elements */
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+        
+        .circle-1 {
+            width: 200px;
+            height: 200px;
+            background-color: var(--primary);
+            top: 10%;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .circle-2 {
+            width: 150px;
+            height: 150px;
+            background-color: var(--secondary);
+            bottom: 20%;
+            right: 15%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .circle-3 {
+            width: 100px;
+            height: 100px;
+            background-color: var(--accent);
+            top: 50%;
+            left: 20%;
+            animation: float 10s ease-in-out infinite;
+        }
+        
+        /* Secciones */
+        section {
+            padding: 5rem 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--dark);
+        }
+        
+        /* Diseños personalizados */
+        .designs {
+            background-color: white;
+        }
+        
+        .design-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .design-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .design-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .design-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .design-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .design-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .design-item:hover .design-overlay {
+            transform: translateY(0);
+        }
+        
+        /* Proceso */
+        .process {
+            background-color: #f8f9fa;
+        }
+        
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 2rem;
+            margin: 1rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .step:hover {
+            transform: translateY(-10px);
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        /* Contacto */
+        .contact {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+        }
+        
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .contact-info, .contact-form {
+            flex: 1;
+            min-width: 300px;
+            padding: 2rem;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .contact-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .contact-form button {
+            padding: 1rem 2rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .contact-form button:hover {
+            background-color: var(--secondary);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .social-links {
+            margin-bottom: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* Diseñador de playeras interactivo */
+        .tshirt-designer {
+            padding: 5rem 5%;
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+        
+        .designer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .tshirt-preview {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tshirt-canvas {
+            width: 100%;
+            height: 400px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            margin-bottom: 1rem;
+            position: relative;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNmNWY1ZjUiPjwvcmVjdD48L3N2Zz4=');
+        }
+        
+        .design-controls {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .control-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .control-group input, .control-group textarea, .control-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .color-palette {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">Playeras con Tu Idea</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#disenos">Diseños</a></li>
+                <li><a href="#proceso">Proceso</a></li>
+                <li><a href="#disenador">Crea tu playera</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="floating-element circle-1"></div>
+        <div class="floating-element circle-2"></div>
+        <div class="floating-element circle-3"></div>
+        
+        <div class="hero-content">
+            <h1>Transforma tus ideas en playeras únicas</h1>
+            <p>Diseños personalizados por Daniela Briano</p>
+            <a href="#disenador" class="cta-button">Crear mi playera</a>
+        </div>
+    </section>
+
+    <!-- Diseños Section -->
+    <section id="disenos" class="designs">
+        <h2 class="section-title">Nuestros Diseños</h2>
+        <div class="design-gallery">
+            <div class="design-item">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Diseño personalizado 1">
+                <div class="design-overlay">
+                    <h3>Diseño Abstracto</h3>
+                    <p>Colores vibrantes y formas únicas</p>
+                </div>
+            </div>
+            <div class="design-item">
+                <img src="https://images.unsplash.com/photo-1523381294911-8d3cead13475?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Diseño personalizado 2">
+                <div class="design-overlay">
+                    <h3>Estampado Artístico</h3>
+                    <p>Arte original para tu estilo único</p>
+                </div>
+            </div>
+            <div class="design-item">
+                <img src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Diseño personalizado 3">
+                <div class="design-overlay">
+                    <h3>Frases Creativas</h3>
+                    <p>Expresa con palabras lo que sientes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proceso Section -->
+    <section id="proceso" class="process">
+        <h2 class="section-title">Cómo Funciona</h2>
+        <div class="process-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Envía tu idea</h3>
+                <p>Cuéntanos tu concepto o comparte tu diseño</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Diseñamos</h3>
+                <p>Crearemos un diseño único basado en tu idea</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Aprobación</h3>
+                <p>Revisamos contigo el diseño final</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Impresión y entrega</h3>
+                <p>Tu playera única está en camino</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diseñador Interactivo -->
+    <section id="disenador" class="tshirt-designer">
+        <h2 class="section-title">Crea Tu Playera Ideal</h2>
+        <div class="designer-container">
+            <div class="tshirt-preview">
+                <div class="tshirt-canvas" id="tshirt-display">
+                    <!-- Aquí se mostrará el diseño interactivo -->
+                    <div id="design-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 24px; color: black; font-weight: bold;">Tu texto aquí</div>
+                </div>
+                <button id="download-design" class="cta-button">Descargar diseño</button>
+            </div>
+            <div class="design-controls">
+                <div class="control-group">
+                    <label for="text-input">Texto personalizado:</label>
+                    <textarea id="text-input" rows="2" placeholder="Escribe tu texto aquí">Tu texto aquí</textarea>
+                </div>
+                <div class="control-group">
+                    <label>Color de texto:</label>
+                    <div class="color-palette">
+                        <div class="color-option" style="background-color: #000000;" data-color="#000000"></div>
+                        <div class="color-option" style="background-color: #ffffff; border: 1px solid #ccc;" data-color="#ffffff"></div>
+                        <div class="color-option" style="background-color: #ff6b6b;" data-color="#ff6b6b"></div>
+                        <div class="color-option" style="background-color: #4ecdc4;" data-color="#4ecdc4"></div>
+                        <div class="color-option" style="background-color: #ffd166;" data-color="#ffd166"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="font-family">Estilo de fuente:</label>
+                    <select id="font-family">
+                        <option value="Arial, sans-serif">Arial</option>
+                        <option value="'Times New Roman', serif">Times New Roman</option>
+                        <option value="'Courier New', monospace">Courier New</option>
+                        <option value="'Comic Sans MS', cursive">Comic Sans</option>
+                        <option value="'Pacifico', cursive">Manuscrita</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="font-size">Tamaño de fuente:</label>
+                    <input type="range" id="font-size" min="10" max="50" value="24">
+                </div>
+                <button id="save-design" class="cta-button">Guardar diseño</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto Section -->
+    <section id="contacto" class="contact">
+        <h2 class="section-title">Contáctanos</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Información de Contacto</h3>
+                <div class="contact-detail">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div>
+                        <h4>Teléfono</h4>
+                        <p>+52 81 1531 5579</p>
+                    </div>
+                </div>
+                <div class="contact-detail">
+                    <div class="contact-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div>
+                        <h4>Sitio Web</h4>
+                        <p><a href="https://playerascontuidea.com/" style="color: white;">playerascontuidea.com</a></p>
+                    </div>
+                </div>
+                <div class="contact-detail">
+                    <div class="contact-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <h4>Designer</h4>
+                        <p>Daniela Briano</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <h3>Envíanos un mensaje</h3>
+                <form id="contactForm">
+                    <input type="text" placeholder="Nombre" required>
+                    <input type="email" placeholder="Correo electrónico" required>
+                    <input type="tel" placeholder="Teléfono">
+                    <textarea placeholder="Tu mensaje" required></textarea>
+                    <button type="submit">Enviar mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p>&copy; 2023 Playeras con Tu Idea - Daniela Briano. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Interactividad del diseñador de playeras
+        document.addEventListener('DOMContentLoaded', function() {
+            const textInput = document.getElementById('text-input');
+            const designText = document.getElementById('design-text');
+            const colorOptions = document.querySelectorAll('.color-option');
+            const fontFamily = document.getElementById('font-family');
+            const fontSize = document.getElementById('font-size');
+            const saveButton = document.getElementById('save-design');
+            const downloadButton = document.getElementById('download-design');
+            
+            // Actualizar texto
+            textInput.addEventListener('input', function() {
+                designText.textContent = this.value;
+            });
+            
+            // Cambiar color de texto
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const color = this.getAttribute('data-color');
+                    designText.style.color = color;
+                });
+            });
+            
+            // Cambiar fuente
+            fontFamily.addEventListener('change', function() {
+                designText.style.fontFamily = this.value;
+            });
+            
+            // Cambiar tamaño de fuente
+            fontSize.addEventListener('input', function() {
+                designText.style.fontSize = this.value + 'px';
+            });
+            
+            // Guardar diseño (simulado)
+            saveButton.addEventListener('click', function() {
+                alert('¡Diseño guardado! Nos pondremos en contacto contigo para finalizar tu pedido.');
+            });
+            
+            // Descargar diseño (simulado)
+            downloadButton.addEventListener('click', function() {
+                alert('Función de descarga en desarrollo. Pronto podrás descargar tu diseño.');
+            });
+            
+            // Formulario de contacto
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.');
+                this.reset();
+            });
+            
+            // Animación de elementos al hacer scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.step, .design-item');
+                
+                elements.forEach(element => {
+                    const position = element.getBoundingClientRect();
+                    
+                    if(position.top < window.innerHeight - 100) {
+                        element.style.opacity = 1;
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Inicializar opacidad para animación
+            document.querySelectorAll('.step, .design-item').forEach(element => {
+                element.style.opacity = 0;
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            // Ejecutar una vez al cargar
+            animateOnScroll();
+        });
+    </script>
+</body>
+</html>
